@@ -22,7 +22,7 @@ var CAB_ATLETAS = [
   'Documento atleta', 'Participação', 'Corda atual',
   'Responsável', 'Parentesco', 'Documento responsável', 'WhatsApp', 'E-mail',
   'Responsável vai?', 'Nº acompanhantes', 'Acompanhantes', 'Total de pessoas',
-  'Uso de imagem', 'Observações'
+  'Uso de imagem', 'Observações', 'Necessidade especial'
 ];
 
 var CAB_ACESSO = [
@@ -114,7 +114,8 @@ function montarLinhas(d, carimbo) {
     limpo(r.nome), limpo(r.parentesco), limpo(r.documento), tel, limpo(r.email),
     vai ? 'Sim' : 'Não', acomp.length,
     acomp.map(function (p) { return limpo(p.nome) + ' (' + (limpo(p.parentesco) || '—') + ')'; }).join('; '),
-    total, limpo(d.usoImagem), limpo(d.observacoes)
+    total, limpo(d.usoImagem), limpo(d.observacoes),
+    limpo(a.necessidadeEspecial) === 'Sim' ? 'Sim: ' + (limpo(a.necessidadeQual) || '—') : limpo(a.necessidadeEspecial)
   ];
 
   var acesso = [[carimbo, protocolo, nomeAtleta, 'Atleta', '—', limpo(a.documento), simNao(idadeNoEvento(a.nascimento) !== '' && idadeNoEvento(a.nascimento) <= 12), nomeAtleta, tel]];
@@ -162,15 +163,52 @@ function idadeNoEvento(iso) {
 
 function garantirAba(ss, nome, cabecalho, cor) {
   var aba = ss.getSheetByName(nome);
-  if (!aba) aba = ss.insertSheet(nome);
-  if (aba.getLastRow() === 0) {
-    aba.getRange(1, 1, 1, cabecalho.length).setValues([cabecalho])
+  var nova = !aba;
+  if (nova) aba = ss.insertSheet(nome);
+  if (aba.getMaxColumns() < cabecalho.length) {
+    aba.insertColumnsAfter(aba.getMaxColumns(), cabecalho.length - aba.getMaxColumns());
+  }
+  // Recoloca os nomes das colunas sempre que estiverem faltando ou diferentes
+  var faixa = aba.getRange(1, 1, 1, cabecalho.length);
+  var atual = faixa.getDisplayValues()[0].join('|');
+  if (atual !== cabecalho.join('|')) {
+    faixa.setValues([cabecalho])
       .setFontWeight('bold').setFontColor('#FFFFFF').setBackground(cor).setVerticalAlignment('middle');
     aba.setFrozenRows(1);
     aba.setRowHeight(1, 32);
-    aba.setColumnWidths(1, cabecalho.length, 160);
+    if (nova) aba.setColumnWidths(1, cabecalho.length, 160);
   }
   return aba;
+}
+
+/** Menu "Brincapoeira" na planilha. */
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu('Brincapoeira')
+    .addItem('Arrumar planilha (cabeçalho e linhas vazias)', 'arrumarPlanilha')
+    .addToUi();
+}
+
+/**
+ * Recoloca os nomes das colunas e exclui as linhas sem nome
+ * (sobras de linhas de teste apagadas só pelo conteúdo).
+ */
+function arrumarPlanilha() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var abas = [
+    garantirAba(ss, ABA_ATLETAS, CAB_ATLETAS, '#E3262B'),
+    garantirAba(ss, ABA_ACESSO, CAB_ACESSO, '#0E5A33')
+  ];
+  var removidas = 0;
+  abas.forEach(function (aba) {
+    var ultima = aba.getLastRow();
+    if (ultima < 2) return;
+    var nomes = aba.getRange(2, 3, ultima - 1, 1).getDisplayValues();
+    for (var i = nomes.length - 1; i >= 0; i--) {
+      if (!String(nomes[i][0]).trim()) { aba.deleteRow(i + 2); removidas++; }
+    }
+  });
+  Logger.log('Planilha arrumada. Linhas vazias removidas: ' + removidas);
+  try { ss.toast('Cabeçalhos recolocados e ' + removidas + ' linha(s) vazia(s) removida(s).', 'Brincapoeira', 6); } catch (e) {}
 }
 
 function escrever(aba, linhas) {
