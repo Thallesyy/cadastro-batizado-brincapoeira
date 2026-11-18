@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cadastro Batizado · Brincapoeira</title>
+<meta name="description" content="Cadastro de acesso para o Batizado e Troca de Cordas do Projeto Brincapoeira — Capoeira Porto Bahia.">
+<meta name="theme-color" content="#0E5A33">
+<meta property="og:title" content="Cadastro · Batizado Brincapoeira">
+<meta property="og:description" content="28 de novembro · 9h às 12h · IFSul Campus Sapucaia do Sul. Cadastre o atleta e os familiares que vão ao evento.">
+<meta property="og:image" content="logo.png">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Cores da Capoeira Porto Bahia / Brincapoeira (da logo)
+   ========================================================= */
+:root{
+  --red:#E3262B;
+  --green:#22A447;
+  --blue:#2F3BC4;
+  --deep:#0E5A33;
+  --deep-2:#0A4326;
+  --yellow:#F6B21B;
+  --orange:#E86E1C;
+  --cream:#FBF4E4;
+  --cream-2:#F5EAD0;
+  --card:#FFFFFF;
+  --ink:#1D2A22;
+  --muted:#5C6A61;
+  --line:#E6D9BC;
+  --error:#C81E25;
+  --radius:18px;
+  --shadow:0 1px 2px rgba(14,90,51,.06), 0 8px 28px rgba(14,90,51,.10);
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(246,178,27,.18), transparent 40%),
+    radial-gradient(circle at 100% 30%, rgba(34,164,71,.10), transparent 40%);
+  background-attachment: fixed;
+  line-height:1.45;
+  min-height:100vh;
+}
+h1,h2,h3{font-family:"Baloo 2","Nunito",sans-serif;line-height:1.1;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* faixa de triângulos, igual à borda da logo */
+.tri{
+  height:22px;
+  background-color:var(--red);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='22' viewBox='0 0 90 22'%3E%3Cpolygon points='0,22 15,0 30,22' fill='%23E3262B'/%3E%3Cpolygon points='30,22 45,0 60,22' fill='%2322A447'/%3E%3Cpolygon points='60,22 75,0 90,22' fill='%232F3BC4'/%3E%3Cpolygon points='15,0 45,0 30,22' fill='%232F3BC4'/%3E%3Cpolygon points='45,0 75,0 60,22' fill='%23E3262B'/%3E%3Cpolygon points='75,0 105,0 90,22' fill='%2322A447'/%3E%3Cpolygon points='-15,0 15,0 0,22' fill='%2322A447'/%3E%3C/svg%3E");
+  background-size:90px 22px;
+  background-repeat:repeat-x;
+}
+.tri.flip{transform:scaleY(-1)}
+
+/* ---------- topo ---------- */
+.hero{
+  background:var(--deep);
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(246,178,27,.25), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(232,110,28,.25), transparent 45%);
+  pointer-events:none;
+}
+.hero-inner{
+  position:relative;
+  max-width:760px;margin:0 auto;
+  padding:28px 16px 34px;
+  display:flex;gap:18px;align-items:center;
+}
+.logo{
+  width:108px;height:108px;flex:0 0 auto;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 0 5px rgba(255,255,255,.15), 0 10px 30px rgba(0,0,0,.25);
+}
+.eyebrow{
+  font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  font-size:.78rem;color:var(--yellow);margin:0 0 4px;
+}
+.hero h1{font-size:clamp(1.9rem,6vw,2.7rem);font-weight:800;letter-spacing:.01em}
+.hero h1 span{color:var(--yellow)}
+.hero p.sub{margin:6px 0 0;opacity:.9;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;padding:5px 11px;font-size:.86rem;font-weight:700;
+}
+.chip svg{width:15px;height:15px;flex:0 0 auto}
+
+@media (max-width:520px){
+  .hero-inner{flex-direction:column;text-align:center;padding:18px 16px 30px;gap:12px}
+  .chips{justify-content:center;margin-top:10px}
+  .logo{width:84px;height:84px}
+  .eyebrow{font-size:.7rem}
+}
+
+/* ---------- layout ---------- */
+main{max-width:760px;margin:-18px auto 0;padding:0 16px 120px;position:relative}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(230,217,188,.7);
+}
+
+/* ---------- progresso ---------- */
+.progress{padding:16px 18px 14px;margin-bottom:14px}
+.steps{display:flex;list-style:none;margin:0;padding:0;gap:6px}
+.steps li{flex:1;min-width:0}
+.steps .bar{height:7px;border-radius:99px;background:var(--cream-2);overflow:hidden}
+.steps .bar i{display:block;height:100%;width:0;border-radius:99px;transition:width .35s ease}
+.steps li:nth-child(1) .bar i{background:var(--red)}
+.steps li:nth-child(2) .bar i{background:var(--green)}
+.steps li:nth-child(3) .bar i{background:var(--blue)}
+.steps li:nth-child(4) .bar i{background:var(--orange)}
+.steps li.done .bar i,.steps li.current .bar i{width:100%}
+.steps li.current .bar i{opacity:.9}
+.steps .lbl{display:block;margin-top:6px;font-size:.78rem;font-weight:800;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.steps li.current .lbl{color:var(--deep)}
+@media (max-width:420px){ .steps .lbl{font-size:.7rem} }
+
+/* ---------- seções ---------- */
+.step{display:none;padding:22px 20px 24px}
+.step.active{display:block;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .step.active{animation:none} .steps .bar i{transition:none} }
+
+.step-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px}
+.step-ico{
+  width:44px;height:44px;border-radius:14px;flex:0 0 auto;
+  display:grid;place-items:center;color:#fff;
+}
+.step-ico svg{width:24px;height:24px}
+.ico-red{background:var(--red)} .ico-green{background:var(--green)} .ico-blue{background:var(--blue)} .ico-orange{background:var(--orange)}
+.step-head h2{font-size:1.45rem;color:var(--deep)}
+.step-head p{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 14px}
+.col-2{grid-column:1 / -1}
+@media (max-width:560px){ .grid{grid-template-columns:1fr} }
+
+.field label,.legend{
+  display:block;font-weight:800;font-size:.92rem;margin-bottom:6px;color:var(--ink);
+}
+.req{color:var(--red)}
+.opt{font-weight:600;color:var(--muted);font-size:.82rem}
+.hint{font-size:.82rem;color:var(--muted);margin-top:5px}
+.input,select.input,textarea.input{
+  width:100%;
+  min-height:48px;
+  padding:11px 14px;
+  border:2px solid var(--line);
+  border-radius:12px;
+  background:#FFFDF8;
+  font-size:1rem;
+  transition:border-color .15s, box-shadow .15s, background .15s;
+  -webkit-appearance:none;appearance:none;
+}
+select.input{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230E5A33' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;
+}
+textarea.input{min-height:90px;resize:vertical}
+.input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 4px rgba(34,164,71,.16);background:#fff}
+.field.invalid .input{border-color:var(--error);background:#FFF6F6}
+.err{display:none;color:var(--error);font-size:.84rem;font-weight:700;margin-top:5px}
+.field.invalid .err,.group.invalid .err{display:block}
+
+/* cartões de opção (radio) */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){ .options{grid-template-columns:1fr} }
+.option{position:relative}
+.option input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.option .box{
+  display:flex;gap:12px;align-items:center;
+  border:2px solid var(--line);border-radius:14px;padding:13px 14px;
+  background:#FFFDF8;cursor:pointer;transition:all .15s;min-height:64px;
+}
+.option .dot{
+  width:22px;height:22px;border-radius:50%;border:2px solid #C9B98F;flex:0 0 auto;
+  display:grid;place-items:center;transition:all .15s;
+}
+.option .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:#fff;transform:scale(0);transition:transform .15s}
+.option strong{display:block;font-size:.98rem}
+.option small{display:block;color:var(--muted);font-size:.82rem;line-height:1.3}
+.option input:checked + .box{border-color:var(--green);background:#F0FAF2}
+.option input:checked + .box .dot{border-color:var(--green);background:var(--green)}
+.option input:checked + .box .dot::after{transform:scale(1)}
+.option input:focus-visible + .box{box-shadow:0 0 0 4px rgba(34,164,71,.2)}
+.group.invalid .option .box{border-color:var(--error)}
+.options.compact{grid-template-columns:1fr 1fr}
+.options.compact .box{min-height:50px;padding:10px 14px}
+
+/* checkbox */
+.check{display:flex;gap:12px;align-items:flex-start;cursor:pointer;padding:12px 14px;border-radius:14px;background:var(--cream);border:2px solid transparent}
+.check input{
+  -webkit-appearance:none;appearance:none;margin:1px 0 0;
+  width:24px;height:24px;flex:0 0 auto;border-radius:7px;border:2px solid #C9B98F;background:#fff;
+  display:grid;place-items:center;cursor:pointer;transition:all .15s;
+}
+.check input::after{
+  content:"";width:12px;height:7px;border-left:3px solid #fff;border-bottom:3px solid #fff;
+  transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .15s;
+}
+.check input:checked{background:var(--green);border-color:var(--green)}
+.check input:checked::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+.check input:focus-visible{box-shadow:0 0 0 4px rgba(34,164,71,.2)}
+.check span{font-weight:700;font-size:.95rem}
+.check small{display:block;font-weight:600;color:var(--muted);font-size:.83rem}
+.check.invalid{border-color:var(--error);background:#FFF6F6}
+
+.reveal{display:none}
+.reveal.on{display:block;animation:in .25s ease}
+
+/* ---------- acompanhantes ---------- */
+.people-summary{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:linear-gradient(135deg,var(--deep),#137043);color:#fff;
+  border-radius:14px;padding:12px 16px;margin-bottom:14px;
+}
+.people-summary b{font-family:"Baloo 2",sans-serif;font-size:1.7rem;line-height:1;color:var(--yellow)}
+.people-summary .ps-txt{font-weight:700;font-size:.92rem}
+.people-summary .ps-txt small{display:block;opacity:.8;font-weight:600}
+.person{
+  border:2px solid var(--line);border-radius:16px;padding:14px 14px 16px;margin-bottom:12px;
+  background:#FFFDF8;position:relative;animation:in .25s ease;
+}
+.person-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.person-top h3{font-size:1.08rem;color:var(--deep);display:flex;align-items:center;gap:8px}
+.badge{
+  width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  font-family:"Nunito",sans-serif;font-size:.85rem;font-weight:800;color:#fff;
+}
+.person:nth-child(3n+1) .badge{background:var(--red)}
+.person:nth-child(3n+2) .badge{background:var(--green)}
+.person:nth-child(3n+3) .badge{background:var(--blue)}
+.btn-remove{
+  border:0;background:transparent;color:var(--error);font-weight:800;font-size:.86rem;
+  display:inline-flex;align-items:center;gap:4px;padding:8px 10px;border-radius:10px;cursor:pointer;
+}
+.btn-remove:hover{background:#FFF0F0}
+.btn-remove svg{width:16px;height:16px}
+.empty{
+  text-align:center;color:var(--muted);padding:22px 16px;border:2px dashed var(--line);border-radius:16px;margin-bottom:12px;
+  font-weight:600;
+}
+.btn-add{
+  width:100%;min-height:54px;border:2px dashed var(--green);background:#F0FAF2;color:var(--deep);
+  border-radius:14px;font-weight:800;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:background .15s;
+}
+.btn-add:hover{background:#E2F5E6}
+.btn-add:disabled{opacity:.5;cursor:not-allowed}
+.btn-add svg{width:20px;height:20px}
+
+/* ---------- revisão ---------- */
+.review{border-radius:16px;border:2px solid var(--line);overflow:hidden;margin-bottom:16px}
+.review-sec{padding:14px 16px;border-bottom:1px solid var(--line)}
+.review-sec:last-child{border-bottom:0}
+.review-sec h3{font-size:1rem;color:var(--deep);display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.review-sec h3 button{border:0;background:none;color:var(--blue);font-weight:800;font-size:.85rem;cursor:pointer;padding:4px 6px;font-family:"Nunito",sans-serif}
+.review dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:.93rem}
+.review dt{color:var(--muted);font-weight:700}
+.review dd{margin:0;font-weight:700;word-break:break-word}
+.review ul{margin:0;padding-left:18px;font-size:.93rem;font-weight:700}
+.review ul li{margin:2px 0}
+.review ul li small{color:var(--muted);font-weight:600}
+
+.recs{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+.recs li{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;font-weight:600}
+.recs .ri{width:30px;height:30px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;font-size:1rem}
+.recs li:nth-child(1) .ri{background:#FDE7D6}
+.recs li:nth-child(2) .ri{background:#FFF1CC}
+.recs li:nth-child(3) .ri{background:#DFF3E4}
+.recs li:nth-child(4) .ri{background:#E3E6FA}
+.recs li:nth-child(5) .ri{background:#FDE0E1}
+.recs b{display:block}
+
+.alert{
+  display:none;gap:10px;align-items:flex-start;border-radius:14px;padding:12px 14px;margin-top:14px;
+  background:#FFF0F0;color:#8E1318;border:2px solid #F5C2C4;font-weight:700;font-size:.92rem;
+}
+.alert.on{display:flex}
+.alert svg{width:20px;height:20px;flex:0 0 auto;margin-top:1px}
+
+/* ---------- navegação ---------- */
+.nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:rgba(251,244,228,.92);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+}
+.nav-inner{max-width:760px;margin:0 auto;display:flex;gap:10px}
+.btn{
+  min-height:52px;border-radius:14px;border:0;padding:0 20px;font-weight:800;font-size:1.02rem;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .08s, background .15s, opacity .15s;
+}
+.btn:active{transform:scale(.98)}
+.btn svg{width:20px;height:20px}
+.btn-primary{flex:1;background:var(--green);color:#fff;box-shadow:0 6px 16px rgba(34,164,71,.3)}
+.btn-primary:hover{background:#1C9140}
+.btn-send{background:var(--red);box-shadow:0 6px 16px rgba(227,38,43,.3)}
+.btn-send:hover{background:#C91F24}
+.btn-ghost{background:#fff;color:var(--deep);border:2px solid var(--line)}
+.btn-ghost:hover{background:var(--cream-2)}
+.btn[disabled]{opacity:.65;cursor:wait}
+.spinner{width:20px;height:20px;border-radius:50%;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- sucesso ---------- */
+.success{display:none;padding:0;overflow:hidden;text-align:center}
+.success.on{display:block;animation:in .4s ease}
+.success-body{padding:26px 20px 24px}
+.check-big{
+  width:78px;height:78px;border-radius:50%;background:var(--green);margin:0 auto 14px;
+  display:grid;place-items:center;box-shadow:0 0 0 8px #DFF3E4;
+}
+.check-big svg{width:40px;height:40px;color:#fff}
+.success h2{font-size:1.8rem;color:var(--deep)}
+.success p{color:var(--muted);font-weight:600;margin:6px 0 0}
+.ticket{
+  margin:20px auto 0;max-width:460px;text-align:left;
+  border:2px dashed var(--line);border-radius:16px;padding:16px;background:#FFFDF8;
+}
+.ticket .proto{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.ticket .proto span{font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ticket .proto b{font-family:"Baloo 2",sans-serif;font-size:1.35rem;color:var(--red);letter-spacing:.04em}
+.ticket ol{margin:0;padding-left:20px;font-weight:700}
+.ticket ol li{margin:3px 0}
+.ticket ol small{color:var(--muted);font-weight:600}
+.ticket .when{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:.88rem;font-weight:700;color:var(--deep)}
+.success-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+.success-actions .btn{flex:1 1 200px;max-width:280px}
+
+footer{text-align:center;color:var(--muted);font-size:.85rem;font-weight:600;padding:24px 16px 8px}
+footer b{color:var(--deep)}
+.credito{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:.82rem}
+.credito a{color:var(--deep);font-weight:800;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(14,90,51,.35)}
+.credito a:hover{color:var(--green);text-decoration-color:currentColor}
+.credito .credito-num{white-space:nowrap;font-weight:700}
+.credito .coautora{display:inline-block;margin-top:4px}
+
+@media print{
+  .hero,.progress,.nav,.success-actions,footer,.tri{display:none!important}
+  body{background:#fff}
+  main{margin:0;padding:0}
+  .card{box-shadow:none;border:0}
+}
+</style>
+</head>
+<body>
+
+<div class="tri"></div>
+<header class="hero">
+  <div class="hero-inner">
+    <img class="logo" src="logo.png" alt="Logo Capoeira Porto Bahia" width="108" height="108">
+    <div>
+      <p class="eyebrow">Projeto Brincapoeira · Capoeira Porto Bahia</p>
+      <h1>Batizado <span>&amp;</span> Troca de Cordas</h1>
+      <p class="sub">Cadastro de acesso para atletas e familiares</p>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+</header>
+<div class="tri flip"></div>
+
+<main>
+  <noscript><div class="card" style="padding:18px">Ative o JavaScript para preencher o cadastro.</div></noscript>
+
+  <!-- Progresso -->
+  <div class="card progress" id="progress">
+    <ol class="steps" aria-label="Etapas do cadastro">
+      <li class="current"><div class="bar"><i></i></div><span class="lbl">1. Atleta</span></li>
+      <li><div class="bar"><i></i></div><span class="lbl">2. Responsável</span></li>
+      <li><div class="bar"><i></i></div><span class="lbl">3. Familiares</span></li>
+      <li><div class="bar"><i></i></div><span class="lbl">4. Confirmar</span></li>
+    </ol>
+  </div>
+
+  <form id="form" class="card" novalidate autocomplete="on">
+
+    <!-- ===== ETAPA 1: ATLETA ===== -->
+    <section class="step active" data-step="0" aria-labelledby="h-atleta">
+      <div class="step-head">
+        <div class="step-ico ico-red" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.4"/><path d="M12 8v6m0 0-4 6m4-6 4 6M6 11l6-1 6 1"/></svg>
+        </div>
+        <div>
+          <h2 id="h-atleta">Dados do atleta</h2>
+          <p>Quem vai jogar no batizado.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field col-2">
+          <label for="a_nome">Nome completo do atleta <span class="req">*</span></label>
+          <input class="input" id="a_nome" name="a_nome" type="text" autocomplete="off" maxlength="120" placeholder="Ex.: Maria Eduarda da Silva" data-required data-minwords="2">
+          <div class="err">Informe nome e sobrenome.</div>
+        </div>
+        <div class="field">
+          <label for="a_apelido">Apelido na capoeira <span class="opt">(opcional)</span></label>
+          <input class="input" id="a_apelido" name="a_apelido" type="text" maxlength="60" placeholder="Ex.: Formiguinha">
+        </div>
+        <div class="field">
+          <label for="a_nasc">Data de nascimento <span class="req">*</span></label>
+          <input class="input" id="a_nasc" name="a_nasc" type="date" data-required data-date>
+          <div class="err">Informe uma data válida.</div>
+          <div class="hint" id="a_idade"></div>
+        </div>
+        <div class="field col-2 doc-field">
+          <label for="a_doc">RG ou CPF do atleta <span class="doc-tag"></span></label>
+          <input class="input" id="a_doc" name="a_doc" type="text" inputmode="numeric" maxlength="20" placeholder="Somente números" data-doc>
+          <div class="err">Informe o documento.</div>
+        </div>
+
+        <div class="group col-2" id="g_part">
+          <span class="legend">Participação <span class="req">*</span></span>
+          <div class="options" role="radiogroup" aria-label="Participação">
+            <label class="option">
+              <input type="radio" name="a_part" value="Batizado (primeira corda)">
+              <span class="box"><span class="dot"></span><span><strong>Batizado</strong><small>Vai receber a primeira corda</small></span></span>
+            </label>
+            <label class="option">
+              <input type="radio" name="a_part" value="Troca de corda">
+              <span class="box"><span class="dot"></span><span><strong>Troca de corda</strong><small>Já tem corda e vai trocar</small></span></span>
+            </label>
+          </div>
+          <div class="err">Escolha uma opção.</div>
+        </div>
+
+        <div class="field col-2 reveal" id="r_corda">
+          <label for="a_corda">Corda atual <span class="req">*</span></label>
+          <input class="input" id="a_corda" name="a_corda" type="text" maxlength="60" list="cordas" placeholder="Ex.: crua com amarela">
+          <datalist id="cordas"></datalist>
+          <div class="err">Informe a corda que o atleta usa hoje.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ETAPA 2: RESPONSÁVEL ===== -->
+    <section class="step" data-step="1" aria-labelledby="h-resp">
+      <div class="step-head">
+        <div class="step-ico ico-green" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        </div>
+        <div>
+          <h2 id="h-resp">Responsável e contato</h2>
+          <p>Para avisos sobre o evento.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <label class="check col-2">
+          <input type="checkbox" id="r_proprio">
+          <span>O atleta é maior de idade e é o próprio responsável
+            <small>Marque se o próprio atleta está fazendo o cadastro.</small></span>
+        </label>
+
+        <div class="field col-2 resp-only">
+          <label for="r_nome">Nome completo do responsável <span class="req">*</span></label>
+          <input class="input" id="r_nome" name="r_nome" type="text" autocomplete="name" maxlength="120" placeholder="Ex.: Ana Paula da Silva" data-required data-minwords="2">
+          <div class="err">Informe nome e sobrenome.</div>
+        </div>
+        <div class="field resp-only">
+          <label for="r_parent">Parentesco com o atleta <span class="req">*</span></label>
+          <select class="input" id="r_parent" name="r_parent" data-required>
+            <option value="">Selecione…</option>
+          </select>
+          <div class="err">Selecione o parentesco.</div>
+        </div>
+        <div class="field resp-only doc-field">
+          <label for="r_doc">RG ou CPF <span class="doc-tag"></span></label>
+          <input class="input" id="r_doc" name="r_doc" type="text" inputmode="numeric" maxlength="20" placeholder="Somente números" data-doc>
+          <div class="err">Informe o documento.</div>
+        </div>
+        <div class="field">
+          <label for="r_tel">WhatsApp <span class="req">*</span></label>
+          <input class="input" id="r_tel" name="r_tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="(51) 99999-9999" data-required data-phone>
+          <div class="err">Informe um número com DDD.</div>
+        </div>
+        <div class="field">
+          <label for="r_email">E-mail <span class="opt">(opcional)</span></label>
+          <input class="input" id="r_email" name="r_email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="nome@email.com" data-email>
+          <div class="err">E-mail inválido.</div>
+        </div>
+
+        <label class="check col-2 resp-only">
+          <input type="checkbox" id="r_vai" checked>
+          <span>O responsável também vai ao evento
+            <small>Ele entra na lista de acesso — não precisa cadastrá-lo de novo como familiar.</small></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- ===== ETAPA 3: FAMILIARES ===== -->
+    <section class="step" data-step="2" aria-labelledby="h-fam">
+      <div class="step-head">
+        <div class="step-ico ico-blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>
+        </div>
+        <div>
+          <h2 id="h-fam">Familiares e acompanhantes</h2>
+          <p>Todos que vão entrar no campus para assistir.</p>
+        </div>
+      </div>
+
+      <div class="people-summary" aria-live="polite">
+        <div class="ps-txt">Pessoas na lista de entrada<small id="ps-detail">atleta</small></div>
+        <b id="ps-total">1</b>
+      </div>
+
+      <div id="people"></div>
+      <div class="empty" id="empty">Nenhum acompanhante adicionado ainda.<br>Se só o atleta e o responsável vão, pode seguir.</div>
+      <button type="button" class="btn-add" id="btn-add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Adicionar familiar / acompanhante
+      </button>
+      <p class="hint" id="max-hint" style="text-align:center"></p>
+    </section>
+
+    <!-- ===== ETAPA 4: CONFIRMAR ===== -->
+    <section class="step" data-step="3" aria-labelledby="h-conf">
+      <div class="step-head">
+        <div class="step-ico ico-orange" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div>
+          <h2 id="h-conf">Confira e envie</h2>
+          <p>Veja se está tudo certo antes de enviar.</p>
+        </div>
+      </div>
+
+      <div class="review" id="review"></div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label for="obs">Observações <span class="opt">(opcional)</span></label>
+        <textarea class="input" id="obs" name="obs" maxlength="500" placeholder="Alergias, necessidades especiais, cadeira de rodas, algo que a organização precise saber…"></textarea>
+      </div>
+
+      <div class="group" id="g_img" style="margin-bottom:16px">
+        <span class="legend">Autoriza o uso de fotos e vídeos do atleta na divulgação do projeto? <span class="req">*</span></span>
+        <div class="options compact" role="radiogroup" aria-label="Uso de imagem">
+          <label class="option"><input type="radio" name="img" value="Sim"><span class="box"><span class="dot"></span><strong>Sim, autorizo</strong></span></label>
+          <label class="option"><input type="radio" name="img" value="Não"><span class="box"><span class="dot"></span><strong>Não autorizo</strong></span></label>
+        </div>
+        <div class="err">Escolha uma opção.</div>
+      </div>
+
+      <span class="legend">Recomendações para as famílias</span>
+      <ul class="recs">
+        <li><span class="ri" aria-hidden="true">🪑</span><span><b>Cada família leva sua cadeira</b>Não haverá bancos para sentar.</span></li>
+        <li><span class="ri" aria-hidden="true">💧</span><span><b>Garrafinha de água com nome</b>Identifique a garrafa da criança.</span></li>
+        <li><span class="ri" aria-hidden="true">👕</span><span><b>Crianças com o uniforme do projeto</b>Prontas e preparadas para o jogo.</span></li>
+        <li><span class="ri" aria-hidden="true">😄</span><span><b>Muita alegria!</b>E energia positiva para comemorar.</span></li>
+      </ul>
+
+      <label class="check" id="c_ciente">
+        <input type="checkbox" id="ciente">
+        <span>Li as recomendações e confirmo que os dados estão corretos <span class="req">*</span></span>
+      </label>
+
+      <div class="alert" id="alert" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span id="alert-msg"></span>
+      </div>
+    </section>
+  </form>
+
+  <!-- ===== SUCESSO ===== -->
+  <section class="card success" id="success" aria-live="polite">
+    <div class="tri"></div>
+    <div class="success-body">
+      <div class="check-big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h2>Cadastro enviado!</h2>
+      <p>Os nomes abaixo já estão na lista de entrada.</p>
+      <div class="ticket">
+        <div class="proto"><span>Protocolo</span><b id="s-proto"></b></div>
+        <ol id="s-list"></ol>
+        <div class="when" id="s-when"></div>
+      </div>
+      <div class="success-actions">
+        <button type="button" class="btn btn-primary" id="btn-sibling">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Cadastrar outro atleta
+        </button>
+        <button type="button" class="btn btn-ghost" id="btn-print">Salvar comprovante</button>
+      </div>
+      <p class="hint" style="margin-top:12px">Tem irmãos no projeto? Em “Cadastrar outro atleta” os dados do responsável já vêm preenchidos.</p>
+    </div>
+  </section>
+
+  <footer>
+    <b>Projeto Brincapoeira</b> · Capoeira Porto Bahia<br>
+    <span id="foot-local"></span>
+    <p class="credito">Site feito por <a href="https://wa.me/5551986460227" target="_blank" rel="noopener">Thales dos Santos Leal</a> · <a class="credito-num" href="https://wa.me/5551986460227" target="_blank" rel="noopener">(51) 98646-0227</a><br><span class="coautora">Coautora: <b>Mayara Santos</b></span></p>
+  </footer>
+</main>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <button type="button" class="btn btn-ghost" id="btn-back" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Voltar
+    </button>
+    <button type="button" class="btn btn-primary" id="btn-next">
+      Continuar
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</nav>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO — edite aqui
+   ===================================================================== */
+const CONFIG = {
+  // Cole aqui a URL do App Script (termina com /exec). Veja o LEIAME.
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbyJBqsFh5i1MEADsj8rNog6L5zl_vQJcK19bPc6zS4m6NOUs3U4Nsm1gCcmRDKZcZP-WA/exec",
+
+  // Documento (RG/CPF): "opcional", "obrigatorio" ou "nao" (esconde o campo)
+  DOCUMENTO: "obrigatorio",
+
+  // Máximo de familiares/acompanhantes por atleta
+  MAX_ACOMPANHANTES: 8,
+
+  // Sugestões de corda (aparecem ao digitar). Deixe [] para texto livre.
+  CORDAS: [],
+
+  PARENTESCOS: ["Mãe","Pai","Avó","Avô","Irmã","Irmão","Tia","Tio","Madrasta","Padrasto","Prima/Primo","Amigo(a) da família","Outro"],
+
+  EVENTO: {
+    data: "28 de novembro",
+    dataISO: "2026-11-28",
+    horario: "9h às 12h",
+    local: "IFSul Campus Sapucaia do Sul",
+    detalhe: "Área aberta / quadra externa · Sapucaia do Sul - RS"
+  }
+};
+</script>
+
+<script>
+(function(){
+"use strict";
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const DRAFT_KEY = "brincapoeira-cadastro-rascunho";
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); }catch(e){ return null; } },
+  set(v){ try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(v)); }catch(e){} },
+  clear(){ try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
+};
+
+/* ---------- topo / evento ---------- */
+const E = CONFIG.EVENTO;
+const ico = {
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+};
+$("#chips").innerHTML =
+  `<span class="chip">${ico.cal}${esc(E.data)}</span>`+
+  `<span class="chip">${ico.clock}${esc(E.horario)}</span>`+
+  `<span class="chip">${ico.pin}${esc(E.local)}</span>`;
+$("#foot-local").textContent = `${E.data} · ${E.horario} · ${E.local}`;
+
+/* ---------- documento ---------- */
+const DOC = CONFIG.DOCUMENTO;
+$$(".doc-field").forEach(f => {
+  if (DOC === "nao") { f.style.display = "none"; return; }
+  $(".doc-tag", f).outerHTML = DOC === "obrigatorio" ? '<span class="req">*</span>' : '<span class="opt">(opcional)</span>';
+});
+
+/* ---------- listas ---------- */
+$("#cordas").innerHTML = CONFIG.CORDAS.map(c => `<option value="${esc(c)}">`).join("");
+const parentOpts = CONFIG.PARENTESCOS.map(p => `<option>${esc(p)}</option>`).join("");
+$("#r_parent").insertAdjacentHTML("beforeend", parentOpts);
+
+/* ---------- máscaras ---------- */
+function maskPhone(v){
+  let d = v.replace(/\D/g,"").slice(0,11);
+  if (d.length <= 2) return d.length ? "(" + d : "";
+  if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+}
+document.addEventListener("input", e => {
+  const t = e.target;
+  if (t.matches("[data-phone]")) t.value = maskPhone(t.value);
+  if (t.matches("[data-doc]")) t.value = t.value.replace(/[^\dXx.\-\/ ]/g, "");
+  const f = t.closest(".field"); if (f && f.classList.contains("invalid")) validateField(f);
+  const g = t.closest(".group"); if (g) g.classList.remove("invalid");
+  if (t.id === "ciente") $("#c_ciente").classList.remove("invalid");
+  saveDraft();
+});
+document.addEventListener("change", saveDraft);
+
+/* ---------- idade ---------- */
+function ageAt(iso, refISO){
+  const [y,m,d] = iso.split("-").map(Number);
+  const [ry,rm,rd] = refISO.split("-").map(Number);
+  let a = ry - y; if (rm < m || (rm === m && rd < d)) a--;
+  return a;
+}
+function showAge(){
+  const v = $("#a_nasc").value, out = $("#a_idade");
+  if (!v) { out.textContent = ""; return; }
+  const a = ageAt(v, E.dataISO);
+  out.textContent = (a >= 0 && a < 120) ? `${a} ${a === 1 ? "ano" : "anos"} no dia do evento` : "";
+}
+$("#a_nasc").addEventListener("change", showAge);
+$("#a_nasc").max = new Date().toISOString().slice(0,10);
+
+/* ---------- participação ---------- */
+function syncPart(){
+  const troca = $('input[name="a_part"]:checked')?.value === "Troca de corda";
+  $("#r_corda").classList.toggle("on", troca);
+  const inp = $("#a_corda");
+  if (troca) inp.setAttribute("data-required",""); else { inp.removeAttribute("data-required"); $("#r_corda").classList.remove("invalid"); }
+}
+$$('input[name="a_part"]').forEach(r => r.addEventListener("change", syncPart));
+
+/* ---------- responsável ---------- */
+function syncProprio(){
+  const p = $("#r_proprio").checked;
+  $$(".resp-only").forEach(el => { el.style.display = p ? "none" : ""; if (p) el.classList.remove("invalid"); });
+  updateCount();
+}
+$("#r_proprio").addEventListener("change", syncProprio);
+$("#r_vai").addEventListener("change", updateCount);
+
+/* ---------- acompanhantes ---------- */
+const people = $("#people");
+let pid = 0;
+function addPerson(data){
+  if (people.children.length >= CONFIG.MAX_ACOMPANHANTES) return;
+  const id = ++pid;
+  const docHtml = DOC === "nao" ? "" : `
+      <div class="field">
+        <label for="p_doc_${id}">RG ou CPF ${DOC === "obrigatorio" ? '<span class="req">*</span>' : '<span class="opt">(opcional)</span>'}</label>
+        <input class="input p-doc" id="p_doc_${id}" type="text" inputmode="numeric" maxlength="20" placeholder="Somente números" data-doc ${DOC === "obrigatorio" ? "data-required" : ""}>
+        <div class="err">Informe o documento.</div>
+      </div>`;
+  const el = document.createElement("div");
+  el.className = "person";
+  el.innerHTML = `
+    <div class="person-top">
+      <h3><span class="badge"></span><span class="p-title">Acompanhante</span></h3>
+      <button type="button" class="btn-remove" aria-label="Remover acompanhante">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>Remover
+      </button>
+    </div>
+    <div class="grid">
+      <div class="field col-2">
+        <label for="p_nome_${id}">Nome completo <span class="req">*</span></label>
+        <input class="input p-nome" id="p_nome_${id}" type="text" maxlength="120" placeholder="Nome e sobrenome" data-required data-minwords="2">
+        <div class="err">Informe nome e sobrenome.</div>
+      </div>
+      <div class="field">
+        <label for="p_par_${id}">Parentesco <span class="req">*</span></label>
+        <select class="input p-par" id="p_par_${id}" data-required><option value="">Selecione…</option>${parentOpts}</select>
+        <div class="err">Selecione o parentesco.</div>
+      </div>
+      ${docHtml}
+      <label class="check col-2">
+        <input type="checkbox" class="p-cri">
+        <span>É criança (até 12 anos)</span>
+      </label>
+    </div>`;
+  people.appendChild(el);
+  if (data){
+    $(".p-nome", el).value = data.nome || "";
+    $(".p-par", el).value = data.parentesco || "";
+    if ($(".p-doc", el)) $(".p-doc", el).value = data.documento || "";
+    $(".p-cri", el).checked = !!data.crianca;
+  }
+  $(".btn-remove", el).addEventListener("click", () => { el.remove(); renumber(); saveDraft(); });
+  renumber();
+  return el;
+}
+function renumber(){
+  $$(".person", people).forEach((el, i) => {
+    $(".badge", el).textContent = i + 1;
+    $(".p-title", el).textContent = `Acompanhante ${i + 1}`;
+  });
+  const n = people.children.length;
+  $("#empty").style.display = n ? "none" : "";
+  $("#btn-add").disabled = n >= CONFIG.MAX_ACOMPANHANTES;
+  $("#max-hint").textContent = n >= CONFIG.MAX_ACOMPANHANTES ? `Limite de ${CONFIG.MAX_ACOMPANHANTES} acompanhantes por atleta.` : "";
+  updateCount();
+}
+$("#btn-add").addEventListener("click", () => {
+  const el = addPerson();
+  if (el) { $(".p-nome", el).focus(); el.scrollIntoView({behavior:"smooth", block:"center"}); }
+  saveDraft();
+});
+function respGoes(){ return !$("#r_proprio").checked && $("#r_vai").checked; }
+function updateCount(){
+  const n = people.children.length, r = respGoes() ? 1 : 0;
+  $("#ps-total").textContent = 1 + r + n;
+  const parts = ["atleta"]; if (r) parts.push("responsável"); if (n) parts.push(`${n} acompanhante${n > 1 ? "s" : ""}`);
+  $("#ps-detail").textContent = parts.join(" + ");
+}
+
+/* ---------- validação ---------- */
+function validateField(f){
+  const inp = $(".input", f);
+  if (!inp || f.offsetParent === null) { f.classList.remove("invalid"); return true; }
+  const v = inp.value.trim();
+  let ok = true;
+  if (inp.hasAttribute("data-required") && !v) ok = false;
+  if (ok && v && inp.dataset.minwords) ok = v.split(/\s+/).filter(w => w.length > 0).length >= +inp.dataset.minwords;
+  if (ok && v && inp.hasAttribute("data-phone")) ok = v.replace(/\D/g,"").length >= 10;
+  if (ok && v && inp.hasAttribute("data-email")) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  if (ok && v && inp.hasAttribute("data-date")) { const a = ageAt(v, E.dataISO); ok = a >= 1 && a < 110; }
+  if (ok && inp.hasAttribute("data-doc") && DOC === "obrigatorio" && v.replace(/\D/g,"").length < 5) ok = false;
+  f.classList.toggle("invalid", !ok);
+  return ok;
+}
+function validateStep(i){
+  const sec = $(`.step[data-step="${i}"]`);
+  let ok = true, first = null;
+  $$(".field", sec).forEach(f => { if (!validateField(f)) { ok = false; first = first || f; } });
+  $$(".group", sec).forEach(g => {
+    const name = $("input[type=radio]", g)?.name;
+    if (name && !$(`input[name="${name}"]:checked`)) { g.classList.add("invalid"); ok = false; first = first || g; }
+  });
+  if (i === 3 && !$("#ciente").checked) { $("#c_ciente").classList.add("invalid"); ok = false; first = first || $("#c_ciente"); }
+  if (first) { first.scrollIntoView({behavior:"smooth", block:"center"}); const inp = $("input,select,textarea", first); if (inp) setTimeout(() => inp.focus({preventScroll:true}), 300); }
+  return ok;
+}
+
+/* ---------- dados ---------- */
+function collect(){
+  const proprio = $("#r_proprio").checked;
+  const nome = $("#a_nome").value.trim();
+  const part = $('input[name="a_part"]:checked')?.value || "";
+  return {
+    atleta: {
+      nome,
+      apelido: $("#a_apelido").value.trim(),
+      nascimento: $("#a_nasc").value,
+      documento: $("#a_doc").value.trim(),
+      participacao: part,
+      cordaAtual: part === "Troca de corda" ? $("#a_corda").value.trim() : ""
+    },
+    responsavel: {
+      proprioAtleta: proprio,
+      nome: proprio ? nome : $("#r_nome").value.trim(),
+      parentesco: proprio ? "Próprio atleta" : $("#r_parent").value,
+      documento: proprio ? $("#a_doc").value.trim() : $("#r_doc").value.trim(),
+      telefone: $("#r_tel").value.trim(),
+      email: $("#r_email").value.trim(),
+      vaiAoEvento: respGoes()
+    },
+    acompanhantes: $$(".person", people).map(el => ({
+      nome: $(".p-nome", el).value.trim(),
+      parentesco: $(".p-par", el).value,
+      documento: $(".p-doc", el)?.value.trim() || "",
+      crianca: $(".p-cri", el).checked
+    })),
+    observacoes: $("#obs").value.trim(),
+    usoImagem: $('input[name="img"]:checked')?.value || "",
+    ciente: $("#ciente").checked
+  };
+}
+function fmtDate(iso){ if (!iso) return "—"; const [y,m,d] = iso.split("-"); return `${d}/${m}/${y}`; }
+function accessList(d){
+  const list = [{nome: d.atleta.nome, info: "Atleta"}];
+  if (d.responsavel.vaiAoEvento) list.push({nome: d.responsavel.nome, info: `Responsável · ${d.responsavel.parentesco}`});
+  d.acompanhantes.forEach(a => list.push({nome: a.nome, info: a.parentesco + (a.crianca ? " · criança" : "")}));
+  return list;
+}
+
+/* ---------- revisão ---------- */
+function renderReview(){
+  const d = collect(), a = d.atleta, r = d.responsavel;
+  const showDoc = DOC !== "nao";
+  const idade = a.nascimento ? ageAt(a.nascimento, E.dataISO) : null;
+  const row = (k, v) => v ? `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>` : "";
+  $("#review").innerHTML = `
+    <div class="review-sec">
+      <h3>Atleta <button type="button" data-goto="0">Editar</button></h3>
+      <dl>
+        ${row("Nome", a.nome)}
+        ${row("Apelido", a.apelido)}
+        ${row("Nascimento", fmtDate(a.nascimento) + (idade !== null ? ` (${idade} anos)` : ""))}
+        ${showDoc ? row("Documento", a.documento) : ""}
+        ${row("Participação", a.participacao)}
+        ${row("Corda atual", a.cordaAtual)}
+      </dl>
+    </div>
+    <div class="review-sec">
+      <h3>Responsável <button type="button" data-goto="1">Editar</button></h3>
+      <dl>
+        ${row("Nome", r.nome)}
+        ${row("Parentesco", r.parentesco)}
+        ${row("WhatsApp", r.telefone)}
+        ${row("E-mail", r.email)}
+      </dl>
+    </div>
+    <div class="review-sec">
+      <h3>Lista de entrada (${accessList(d).length}) <button type="button" data-goto="2">Editar</button></h3>
+      <ul>${accessList(d).map(p => `<li>${esc(p.nome)} <small>— ${esc(p.info)}</small></li>`).join("")}</ul>
+    </div>`;
+}
+$("#review").addEventListener("click", e => { const b = e.target.closest("[data-goto]"); if (b) go(+b.dataset.goto); });
+
+/* ---------- etapas ---------- */
+let step = 0;
+const LAST = 3;
+function go(i){
+  step = i;
+  $$(".step").forEach(s => s.classList.toggle("active", +s.dataset.step === i));
+  $$(".steps li").forEach((li, k) => { li.classList.toggle("done", k < i); li.classList.toggle("current", k === i); });
+  $("#btn-back").hidden = i === 0;
+  const next = $("#btn-next");
+  if (i === LAST) {
+    renderReview();
+    next.classList.add("btn-send");
+    next.innerHTML = 'Enviar cadastro <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
+  } else {
+    next.classList.remove("btn-send");
+    next.innerHTML = 'Continuar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>';
+  }
+  $("#alert").classList.remove("on");
+  window.scrollTo({top: $("#progress").offsetTop - 12, behavior: "smooth"});
+  saveDraft();
+}
+$("#btn-next").addEventListener("click", () => {
+  if (!validateStep(step)) return;
+  if (step < LAST) go(step + 1); else submit();
+});
+$("#btn-back").addEventListener("click", () => go(Math.max(0, step - 1)));
+$("#form").addEventListener("submit", e => e.preventDefault());
+$("#form").addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.matches("input:not([type=checkbox]):not([type=radio])")) { e.preventDefault(); $("#btn-next").click(); }
+});
+
+/* ---------- envio ---------- */
+function protocolo(){
+  const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let s = ""; const rnd = new Uint32Array(6); (window.crypto || window.msCrypto).getRandomValues(rnd);
+  rnd.forEach(n => s += abc[n % abc.length]);
+  return "BC-" + s;
+}
+function showError(msg){ $("#alert-msg").textContent = msg; $("#alert").classList.add("on"); $("#alert").scrollIntoView({behavior:"smooth", block:"center"}); }
+let sending = false;
+let currentProto = null;
+async function submit(){
+  if (sending) return;
+  const url = (CONFIG.SCRIPT_URL || "").trim();
+  if (!url) { showError("Este formulário ainda não está conectado à planilha. Avise a organização do evento (falta configurar o SCRIPT_URL)."); return; }
+
+  const data = collect();
+  // mesmo protocolo em todas as tentativas: se a resposta se perder e a pessoa reenviar, a planilha não duplica
+  if (!currentProto) { currentProto = protocolo(); saveDraft(); }
+  data.protocolo = currentProto;
+  data.enviadoEm = new Date().toISOString();
+
+  sending = true;
+  const btn = $("#btn-next"), old = btn.innerHTML;
+  btn.disabled = true; $("#btn-back").disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Enviando…';
+  $("#alert").classList.remove("on");
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {"Content-Type": "text/plain;charset=utf-8"},
+      body: JSON.stringify(data),
+      redirect: "follow"
+    });
+    const text = await res.text();
+    let json = null;
+    try { json = JSON.parse(text); } catch(e) {}
+    if (!json) throw new Error("A planilha não respondeu corretamente. Confira se o App Script foi implantado com acesso para “Qualquer pessoa”.");
+    if (!json.ok) throw new Error(json.erro || "Não foi possível salvar o cadastro.");
+    store.clear();
+    currentProto = null;
+    showSuccess(data, json.protocolo || data.protocolo);
+  } catch (err) {
+    if (!navigator.onLine) {
+      showError("Você está sem internet. Conecte-se e toque em “Enviar cadastro” de novo — seus dados continuam aqui.");
+    } else if (err instanceof TypeError) {
+      showError("Não conseguimos falar com a planilha. Tente enviar de novo em alguns segundos — seus dados continuam aqui. Se continuar, avise a organização (o App Script precisa estar implantado com acesso para “Qualquer pessoa”).");
+    } else {
+      showError(err.message);
+    }
+    btn.innerHTML = old;
+  } finally {
+    sending = false; btn.disabled = false; $("#btn-back").disabled = false;
+  }
+}
+
+/* ---------- sucesso ---------- */
+let lastResp = null;
+function showSuccess(d, proto){
+  lastResp = { ...d.responsavel };
+  $("#form").style.display = "none";
+  $("#progress").style.display = "none";
+  $("#nav").style.display = "none";
+  $("#s-proto").textContent = proto;
+  $("#s-list").innerHTML = accessList(d).map(p => `<li>${esc(p.nome)} <small>— ${esc(p.info)}</small></li>`).join("");
+  $("#s-when").textContent = `${E.data} · ${E.horario} · ${E.local}`;
+  $("#success").classList.add("on");
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+$("#btn-print").addEventListener("click", () => window.print());
+$("#btn-sibling").addEventListener("click", () => {
+  const r = lastResp;
+  currentProto = null;
+  $("#form").reset();
+  people.innerHTML = "";
+  if (r && !r.proprioAtleta) {
+    $("#r_nome").value = r.nome; $("#r_parent").value = r.parentesco; $("#r_doc").value = r.documento;
+    $("#r_tel").value = r.telefone; $("#r_email").value = r.email;
+    $("#r_vai").checked = false; // já está na lista de entrada do irmão
+  } else if (r) {
+    $("#r_tel").value = r.telefone; $("#r_email").value = r.email;
+  }
+  $$(".invalid").forEach(el => el.classList.remove("invalid"));
+  syncPart(); syncProprio(); renumber(); showAge();
+  $("#success").classList.remove("on");
+  $("#form").style.display = ""; $("#progress").style.display = ""; $("#nav").style.display = "";
+  go(0);
+  $("#a_nome").focus({preventScroll:true});
+});
+
+/* ---------- rascunho (se o celular recarregar a página) ---------- */
+let restoring = false;
+function saveDraft(){
+  if (restoring) return;
+  const d = collect();
+  store.set({ d, step, proto: currentProto });
+}
+function restore(){
+  const s = store.get(); if (!s || !s.d) return;
+  restoring = true;
+  currentProto = s.proto || null;
+  const {atleta:a, responsavel:r} = s.d;
+  $("#a_nome").value = a.nome || ""; $("#a_apelido").value = a.apelido || ""; $("#a_nasc").value = a.nascimento || "";
+  $("#a_doc").value = a.documento || "";
+  if (a.participacao) { const el = $(`input[name="a_part"][value="${CSS.escape(a.participacao)}"]`); if (el) el.checked = true; }
+  $("#a_corda").value = a.cordaAtual || "";
+  $("#r_proprio").checked = !!r.proprioAtleta;
+  if (!r.proprioAtleta) { $("#r_nome").value = r.nome || ""; $("#r_parent").value = r.parentesco || ""; $("#r_doc").value = r.documento || ""; }
+  $("#r_tel").value = r.telefone || ""; $("#r_email").value = r.email || "";
+  $("#r_vai").checked = r.proprioAtleta ? true : !!r.vaiAoEvento;
+  (s.d.acompanhantes || []).forEach(p => addPerson(p));
+  $("#obs").value = s.d.observacoes || "";
+  if (s.d.usoImagem) { const el = $(`input[name="img"][value="${CSS.escape(s.d.usoImagem)}"]`); if (el) el.checked = true; }
+  syncPart(); syncProprio(); showAge();
+  restoring = false;
+  if (s.step > 0 && s.step <= LAST) go(s.step);
+}
+
+renumber();
+restore();
+})();
+</script>
+</body>
+</html>
