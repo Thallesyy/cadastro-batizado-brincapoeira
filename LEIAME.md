@@ -2,11 +2,13 @@
 
 Site de cadastro para atletas e familiares. Cada envio vai **na hora** para uma planilha Google, que você baixa como **Excel (.xlsx)** quando quiser.
 
+No ar em **https://brincapoeira.com** (GitHub Pages; a Vercel também publica em brincapoeira.vercel.app).
+
 ```
-site/
-  index.html     ← o formulário (as configurações ficam no topo do <script>)
-  logo.png       ← logo Capoeira Porto Bahia
-  favicon.png
+index.html       ← o formulário (as configurações ficam no topo do <script>)
+logo.png         ← logo Capoeira Porto Bahia
+favicon.png
+CNAME            ← domínio brincapoeira.com (GitHub Pages)
 apps-script/
   Code.gs        ← o código que grava na planilha
 ```
@@ -43,7 +45,7 @@ A planilha recebe duas abas automaticamente:
 
 ## Passo 3 – Ligar o site à planilha
 
-Abra `site/index.html` num editor de texto (o Bloco de Notas serve), procure `SCRIPT_URL` no começo do segundo `<script>` e cole a URL entre as aspas:
+Abra `index.html` num editor de texto (o Bloco de Notas serve), procure `SCRIPT_URL` no começo do segundo `<script>` e cole a URL entre as aspas:
 
 ```js
 SCRIPT_URL: "https://script.google.com/macros/s/AKfy...../exec",
@@ -59,15 +61,21 @@ No mesmo bloco `CONFIG` você também pode mudar:
 | `PARENTESCOS` | opções da lista de parentesco |
 | `EVENTO` | data, horário e local que aparecem no topo |
 
-## Passo 4 – Colocar o site no ar (grátis)
+## Passo 4 – Site no ar
 
-O jeito mais fácil é o **Netlify Drop**:
+O site é publicado pelo **GitHub Pages** a partir da branch `main` (pasta raiz), no domínio **brincapoeira.com**. Toda alteração enviada (`git push`) para o GitHub atualiza o site em 1–2 minutos.
 
-1. Abra <https://app.netlify.com/drop>.
-2. **Arraste a pasta `site`** inteira para a página.
-3. Pronto: você recebe um link, que pode trocar por um nome como `batizado-brincapoeira.netlify.app` em *Site settings → Change site name*.
+DNS na Hostinger (domínio `brincapoeira.com`):
 
-Outras opções: GitHub Pages, Cloudflare Pages ou a hospedagem do site do grupo. É só subir os 3 arquivos da pasta `site`.
+| Tipo | Nome | Aponta para |
+|---|---|---|
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | thallesyy.github.io |
+
+Depois que o DNS propagar, marque **Enforce HTTPS** em GitHub → Settings → Pages.
 
 **Teste antes de divulgar:** faça um cadastro de teste pelo celular, confira se ele apareceu nas duas abas e exclua as linhas.
 
