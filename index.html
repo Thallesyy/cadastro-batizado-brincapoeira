@@ -437,6 +437,20 @@ footer b{color:var(--deep)}
           <div class="err">Informe o documento.</div>
         </div>
 
+        <div class="group col-2" id="g_grupo">
+          <span class="legend">A qual grupo de capoeira pertence? <span class="req">*</span></span>
+          <div class="options compact" role="radiogroup" aria-label="Grupo de capoeira">
+            <label class="option"><input type="radio" name="a_grupo" value="Brincapoeira"><span class="box"><span class="dot"></span><strong>Brincapoeira</strong></span></label>
+            <label class="option"><input type="radio" name="a_grupo" value="Visitante"><span class="box"><span class="dot"></span><strong>Visitante</strong></span></label>
+          </div>
+          <div class="err">Escolha uma opção.</div>
+        </div>
+
+        <div class="field col-2 reveal" id="r_grupo">
+          <label for="a_grupo_nome">Nome do grupo <span class="opt">(opcional)</span></label>
+          <input class="input" id="a_grupo_nome" name="a_grupo_nome" type="text" maxlength="80" placeholder="Ex.: Grupo Capoeira Angola…">
+        </div>
+
         <div class="group col-2" id="g_part">
           <span class="legend">Participação <span class="req">*</span></span>
           <div class="options" role="radiogroup" aria-label="Participação">
@@ -759,6 +773,10 @@ function syncPart(){
   if (troca) inp.setAttribute("data-required",""); else { inp.removeAttribute("data-required"); $("#r_corda").classList.remove("invalid"); }
 }
 $$('input[name="a_part"]').forEach(r => r.addEventListener("change", syncPart));
+function syncGrupo(){
+  $("#r_grupo").classList.toggle("on", $('input[name="a_grupo"]:checked')?.value === "Visitante");
+}
+$$('input[name="a_grupo"]').forEach(r => r.addEventListener("change", syncGrupo));
 function syncNec(){
   const sim = $('input[name="a_nec"]:checked')?.value === "Sim";
   $("#r_nec").classList.toggle("on", sim);
@@ -891,7 +909,9 @@ function collect(){
       participacao: part,
       cordaAtual: part === "Troca de corda" ? $("#a_corda").value.trim() : "",
       necessidadeEspecial: $('input[name="a_nec"]:checked')?.value || "",
-      necessidadeQual: $('input[name="a_nec"]:checked')?.value === "Sim" ? $("#a_nec_qual").value.trim() : ""
+      necessidadeQual: $('input[name="a_nec"]:checked')?.value === "Sim" ? $("#a_nec_qual").value.trim() : "",
+      grupo: $('input[name="a_grupo"]:checked')?.value || "",
+      grupoNome: $('input[name="a_grupo"]:checked')?.value === "Visitante" ? $("#a_grupo_nome").value.trim() : ""
     },
     responsavel: {
       proprioAtleta: proprio,
@@ -936,6 +956,7 @@ function renderReview(){
         ${row("Nascimento", fmtDate(a.nascimento) + (idade !== null ? ` (${idade} anos)` : ""))}
         ${showDoc ? row("Documento", a.documento) : ""}
         ${row("Participação", a.participacao)}
+        ${row("Grupo", a.grupoNome ? a.grupo + " — " + a.grupoNome : a.grupo)}
         ${row("Corda atual", a.cordaAtual)}
         ${row("Necessidade especial", a.necessidadeEspecial === "Sim" ? "Sim — " + a.necessidadeQual : a.necessidadeEspecial)}
       </dl>
@@ -1070,7 +1091,7 @@ $("#btn-sibling").addEventListener("click", () => {
     $("#r_tel").value = r.telefone; $("#r_email").value = r.email;
   }
   $$(".invalid").forEach(el => el.classList.remove("invalid"));
-  syncPart(); syncNec(); syncProprio(); renumber(); showAge();
+  syncPart(); syncNec(); syncGrupo(); syncProprio(); renumber(); showAge();
   $("#success").classList.remove("on");
   $("#form").style.display = ""; $("#progress").style.display = ""; $("#nav").style.display = "";
   go(0);
@@ -1095,6 +1116,8 @@ function restore(){
   $("#a_corda").value = a.cordaAtual || "";
   if (a.necessidadeEspecial) { const el = $(`input[name="a_nec"][value="${CSS.escape(a.necessidadeEspecial)}"]`); if (el) el.checked = true; }
   $("#a_nec_qual").value = a.necessidadeQual || "";
+  if (a.grupo) { const el = $(`input[name="a_grupo"][value="${CSS.escape(a.grupo)}"]`); if (el) el.checked = true; }
+  $("#a_grupo_nome").value = a.grupoNome || "";
   $("#r_proprio").checked = !!r.proprioAtleta;
   if (!r.proprioAtleta) { $("#r_nome").value = r.nome || ""; $("#r_parent").value = r.parentesco || ""; $("#r_doc").value = r.documento || ""; }
   $("#r_tel").value = r.telefone || ""; $("#r_email").value = r.email || "";
@@ -1102,7 +1125,7 @@ function restore(){
   (s.d.acompanhantes || []).forEach(p => addPerson(p));
   $("#obs").value = s.d.observacoes || "";
   if (s.d.usoImagem) { const el = $(`input[name="img"][value="${CSS.escape(s.d.usoImagem)}"]`); if (el) el.checked = true; }
-  syncPart(); syncNec(); syncProprio(); showAge();
+  syncPart(); syncNec(); syncGrupo(); syncProprio(); showAge();
   restoring = false;
   if (s.step > 0 && s.step <= LAST) go(s.step);
 }

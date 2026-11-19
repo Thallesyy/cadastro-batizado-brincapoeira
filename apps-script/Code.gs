@@ -22,7 +22,7 @@ var CAB_ATLETAS = [
   'Documento atleta', 'Participação', 'Corda atual',
   'Responsável', 'Parentesco', 'Documento responsável', 'WhatsApp', 'E-mail',
   'Responsável vai?', 'Nº acompanhantes', 'Acompanhantes', 'Total de pessoas',
-  'Uso de imagem', 'Observações', 'Necessidade especial'
+  'Uso de imagem', 'Observações', 'Necessidade especial', 'Grupo'
 ];
 
 var CAB_ACESSO = [
@@ -115,7 +115,8 @@ function montarLinhas(d, carimbo) {
     vai ? 'Sim' : 'Não', acomp.length,
     acomp.map(function (p) { return limpo(p.nome) + ' (' + (limpo(p.parentesco) || '—') + ')'; }).join('; '),
     total, limpo(d.usoImagem), limpo(d.observacoes),
-    limpo(a.necessidadeEspecial) === 'Sim' ? 'Sim: ' + (limpo(a.necessidadeQual) || '—') : limpo(a.necessidadeEspecial)
+    limpo(a.necessidadeEspecial) === 'Sim' ? 'Sim: ' + (limpo(a.necessidadeQual) || '—') : limpo(a.necessidadeEspecial),
+    limpo(a.grupoNome) ? limpo(a.grupo) + ' — ' + limpo(a.grupoNome) : limpo(a.grupo)
   ];
 
   var acesso = [[carimbo, protocolo, nomeAtleta, 'Atleta', '—', limpo(a.documento), simNao(idadeNoEvento(a.nascimento) !== '' && idadeNoEvento(a.nascimento) <= 12), nomeAtleta, tel]];
